@@ -1,0 +1,260 @@
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+@font-face {
+    font-family: Segoe;
+    src: url(/segoe.ttf);
+  }
+
+body {
+    font-family: Inter, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #131313;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #0c0c0c;
+    
+    height: 30px;
+    color: white;
+    padding: 10px;
+    border-bottom: 1px solid #a5a5a5;
+}
+
+.navbar img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.navbar span {
+    flex-grow: 1;
+}
+
+.navbar button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #0c0c0c;
+    color: white;
+    box-sizing: border-box;
+    border-right: 1px solid #a5a5a5;
+}
+
+.sidebar h3 {
+    margin: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-family: "Segoe";
+    padding-left: 10px;
+    cursor: pointer;
+    font-weight: 100;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    color: #ADADAD;
+    width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: "Segoe";
+    padding-left: 10px;
+    font-size: 13px;
+}
+
+.sidebar ul li:hover {
+    background-color: #2e2e2e;
+}
+
+.editor-container {
+    width: 100%;
+    background-color: #131313;
+    color: #FFF;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.editor-section {
+    flex-grow: 1;
+    display: flex;
+    border-right: 1px solid #a5a5a5;
+    flex-direction: column;
+}
+
+textarea {
+    flex-grow: 1;
+    font-family: "Fira Code";
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    color: white;
+    background-color: #1A1A1A;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.CodeMirror {
+    background-color: #1A1A1A !important;
+    font-family: "Fira Code", monospace !important;
+    font-weight: 100;
+    color: #FFF;
+}
+
+.CodeMirror,
+.CodeMirror pre,
+.CodeMirror-scroll {
+    color: white !important;
+}
+
+.cm-s-default .cm-header {
+    color: #ff9900; 
+}
+.cm-s-default .cm-comment {
+    color: #6a9955; 
+}
+.cm-s-default .cm-keyword {
+    color: #cc99cc; 
+}
+.cm-s-default .cm-string {
+    color: #d8d8d8;
+}
+.cm-s-default .cm-operator {
+    color: #ffcc66; 
+}
+.cm-s-default .cm-number {
+    color: #f99157; 
+}
+.cm-s-default .cm-variable {
+    color: #6699cc; 
+}
+
+button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
+.container {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+
+
+
+.editor-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.editor-section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    flex-grow: 1;
+    font-family: "Fira Code";
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#live-preview {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #131313;
+    border: 1px solid #a5a5a5;
+    color: #FFF;
+    margin-left: 20px; 
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #a5a5a5;
+    box-sizing: border-box;
+    flex-grow: 1; 
+}
+
+
+    .editor-section {
+        height: 100%;
+    }
+
+    .CodeMirror cm-s-default {
+        height: 100vh;
+    }
+
+
+    .file {
+        border-right: 1px solid #a5a5a5;
+        border-bottom: 1px solid transparent;
+        background-color: #1A1A1A;
+        width: 100px;
+        padding: 4px;
+        margin: 0;
+        z-index: 999;
+    }
+    
+.tab {
+    border-bottom: 1px solid #a5a5a5;
+}
+
+
+    .html-code {
+        height: 100%;
+    }

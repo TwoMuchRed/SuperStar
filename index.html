@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperStar - Code Editor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+
+</head>
+<body>
+
+<div class="navbar">
+   <img src="imgs/logo.png">
+   <h3>SuperStar</h3>
+</div>
+
+<div class="container">
+    <div class="sidebar" style="padding: 0;">
+        <h3>Explorer</h3>
+        <ul>
+            <li><a href="#" onclick="openFile('html')">index.html</a></li>
+            <li><a href="#" onclick="openFile('css')">styles.css</a></li>
+            <li><a href="#" onclick="openFile('js')">scripts.js</a></li>
+        </ul>
+    </div>
+
+    <div class="editor-container">
+        <div class="editor-section" id="html-section" style="display: none;">
+            <div class="tab">
+                <h3 class="file">index.html</h3>
+            </div>
+            <div id="html-code" style="height: calc(100% - 40px); width: 100%;"></div>
+        </div>
+
+        <div class="editor-section" id="css-section" style="display: none;" >
+            <div class="tab">
+                <h3 class="file">styles.css</h3>
+            </div>
+            <div id="css-code" style="height: calc(100% - 40px); width: 100%;"></div>
+        </div>
+        <div class="editor-section" id="js-section">
+            <div class="tab">
+                <h3 class="file">scripts.js</h3>
+            </div>
+            <div id="js-code" style="height: calc(100% - 40px); width: 100%;"></div>
+        </div>
+    </div>
+
+    
+
+    <div id="live-preview">
+        <h3>Live Preview</h3>
+        <iframe id="output" style="width: 100%; height: calc(100% - 40px);"></iframe>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Initialize Ace editor for HTML
+        var htmlEditor = ace.edit("html-code");
+        htmlEditor.setTheme("ace/theme/twilight");
+        htmlEditor.session.setMode("ace/mode/html");
+
+        // Initialize Ace editor for CSS
+        var cssEditor = ace.edit("css-code");
+        cssEditor.setTheme("ace/theme/twilight");
+        cssEditor.session.setMode("ace/mode/css");
+
+        // Initialize Ace editor for JavaScript
+        var jsEditor = ace.edit("js-code");
+        jsEditor.setTheme("ace/theme/twilight");
+        jsEditor.session.setMode("ace/mode/javascript");
+    });
+</script>
+<script src="js/scripts.js"></script>
+</body>
+</html>
