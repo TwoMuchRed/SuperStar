@@ -14,22 +14,22 @@
 <div class="navbar">
     <div class="logo">
         <img src="imgs/logo.png">
-        <h3>SuperStar</h3>
     </div>
     <div class="navbar-right">
-        <button class="btn" onclick="exportProject()">Export Project</button>
+        <button class="btn" onclick="downloadProject()">Export Project</button>
     </div>
 </div>
 
 <div class="container">
     <div class="sidebar" style="padding: 0;">
-        <h3>Explorer</h3>
+        <h3>EXPLORER</h3>
         <ul>
             <li><a href="#" onclick="openFile('html')">index.html</a></li>
             <li><a href="#" onclick="openFile('css')">styles.css</a></li>
             <li><a href="#" onclick="openFile('js')">scripts.js</a></li>
         </ul>
     </div>
+    
 
     <div class="editor-container">
         <div class="editor-section" id="html-section" style="display: none;">
@@ -58,6 +58,33 @@
         <iframe id="output" style="width: 100%; height: calc(100% - 40px); overflow: hidden;"></iframe>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.3.0/FileSaver.min.js"></script>
+<script src="pako.min.js"></script> 
+<script>
+    function downloadProject() {
+      const zipFileName = "project.zip";
+
+      // Compress your project files using pako
+      const compressedContent = pako.deflate(
+        // Replace with your logic to get file content (e.g., from HTML elements, local storage)
+        JSON.stringify({
+          index: document.getElementById("yourIndexHtmlContent").textContent,
+          styles: document.getElementById("yourCssContent").textContent,
+          scripts: document.getElementById("yourJsContent").textContent,
+        })
+      );
+
+      // ... Rest of your code using pako ...
+    }
+
+    // Attach click event listener to the download button (if you have one)
+    const downloadButton = document.getElementById("downloadProjectButton");
+    if (downloadButton) {
+      downloadButton.addEventListener("click", downloadProject);
+    }
+  </script>
+    
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
@@ -171,45 +198,10 @@
     });
     
 
-    function exportProject() {
-        var htmlContent = encodeURIComponent(localStorage.getItem('htmlCode') || '');
-        var cssContent = encodeURIComponent(localStorage.getItem('cssCode') || '');
-        var jsContent = encodeURIComponent(localStorage.getItem('jsCode') || '');
 
-        // Create download links for each file
-        createDownloadLink('index.html', htmlContent, 'html');
-        createDownloadLink('styles.css', cssContent, 'css');
-        createDownloadLink('scripts.js', jsContent, 'js');
 
-        // Create a zip file
-        var zip = new JSZip();
-        zip.file("index.html", htmlContent);
-        zip.file("styles.css", cssContent);
-        zip.file("scripts.js", jsContent);
 
-        // Generate the zip file asynchronously
-        zip.generateAsync({ type: "blob" })
-            .then(function (content) {
-                // Create a download link for the zip file
-                var element = document.createElement('a');
-                element.setAttribute('href', URL.createObjectURL(content));
-                element.setAttribute('download', 'project.zip');
-                element.style.display = 'none';
-                document.body.appendChild(element);
-                element.click();
-                document.body.removeChild(element);
-            });
-    }
 
-    function createDownloadLink(filename, content, type) {
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + content);
-        element.setAttribute('download', filename);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
 
     function openFile(type) {
         document.getElementById('html-section').style.display = 'none';
@@ -243,6 +235,9 @@
     // Open index.html by default
     openFile('html');
 </script>
+
+
+
 
 </body>
 </html>

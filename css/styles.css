@@ -27,16 +27,18 @@ body {
     height: 30px;
     color: white;
     padding: 10px;
-    border-bottom: 1px solid #a5a5a5;
+    border-bottom: 1px solid #313131;
 }
 
 .btn {
     padding: 7px;
     background-color: #131313;
-    border: 1px solid #a5a5a5;
+    border: 1px solid #313131;
     font-family: Inter;
     cursor: pointer;
     font-size: 14px;
+    align-items: center;
+    margin-top: 9px;
     color: #FFF;
     border-radius: 5px;
     float: right;
@@ -56,7 +58,7 @@ body {
 .navbar img {
     width: 30px;
     height: 30px;
-    margin-right: 10px;
+    margin-left: 1vh;
     align-self: center;
 }
 
@@ -73,22 +75,23 @@ body {
 }
 
 .sidebar {
-    width: 20%;
-    background-color: #0c0c0c;
+    background-color: #0D0D0D;
     color: white;
+    width: 501px;
     box-sizing: border-box;
-    border-right: 1px solid #a5a5a5;
+    border-right: 1px solid #313131;
 }
 
 .sidebar h3 {
     margin: 0;
-    padding-bottom: 10px;
+    padding-bottom: 1px;
+    margin-top: 5px;
     padding-top: 10px;
+    font-size: 11px;
     font-family: "Segoe";
-    padding-left: 10px;
-    cursor: pointer;
+    padding-left: 20px;
+    cursor: default;
     font-weight: 100;
-    border-bottom: 1px solid #444;
 }
 
 .sidebar ul {
@@ -99,24 +102,25 @@ body {
 
 .sidebar ul li a {
     display: block;
-    width: calc(100% - 1px); /* Adjust width to accommodate border */
+    width: calc(100% - 1px);
     color: #ADADAD;
     cursor: pointer;
     text-decoration: none;
     font-family: "Segoe";
-    padding: 3px 10px; /* Adjust padding as needed */
+    height: 22px;
+    border: 1px solid transparent;
+    padding: 2px 20px;
     font-size: 13px;
-    box-sizing: border-box; /* Include border in width calculation */
-    transition: all 250ms;
+    box-sizing: border-box; 
 }
 
 .sidebar ul li a:hover {
-    background-color: #2e2e2e;
+    background-color: #272727;
 }
 
 .sidebar ul li a:focus {
-    border: 1px solid yellow;
-    background-color: #2e2e2e;
+    border: 1px solid rgb(255, 218, 56);
+    background-color: #414141;
 }
 
 
@@ -136,7 +140,7 @@ body {
 .editor-section {
     flex-grow: 1;
     display: flex;
-    border-right: 1px solid #a5a5a5;
+    border-right: 1px solid #313131;
     flex-direction: column;
 }
 
@@ -238,17 +242,20 @@ button {
 }
 
 #live-preview {
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     background-color: #131313;
-    border-left: 1px solid #a5a5a5;
+    border-left: 1px solid #313131;
     color: #FFF;
 }
 
 #live-preview h3 {
     margin: 0;
-    padding: 4px;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 14px;
+    padding: 9.4px;
 }
 
 
@@ -256,7 +263,7 @@ button {
 iframe {
     border: none;
     width: 100%;
-    border-top: 1px solid #a5a5a5;
+    border-top: 1px solid #313131;
     box-sizing: border-box;
     color: #ffffff;
     background-color: white;
@@ -274,17 +281,25 @@ iframe {
 
 
     .file {
-        border-right: 1px solid #a5a5a5;
+        border-right: 1px solid #313131;
         border-bottom: 1px solid transparent;
         background-color: #1A1A1A;
-        width: 100px;
-        padding: 4px;
+        font-size: 13px;
+        font-family: "Segoe";
+        font-weight: 400;
+        padding: 0 3px 0 10px;
         margin: 0;
+        height: 35px;
+        width: 80px;
         z-index: 999;
+        display: flex;
+        align-items: center;
     }
     
+    
 .tab {
-    border-bottom: 1px solid #a5a5a5;
+    border-bottom: 1px solid #313131;
+    align-items: center;
 }
 
 
