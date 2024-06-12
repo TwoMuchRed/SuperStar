@@ -22,35 +22,49 @@ body {
 .navbar {
     display: flex;
     align-items: center;
+    justify-content: space-between; 
     background-color: #0c0c0c;
-    
     height: 30px;
     color: white;
     padding: 10px;
     border-bottom: 1px solid #a5a5a5;
 }
 
+.btn {
+    padding: 7px;
+    background-color: #131313;
+    border: 1px solid #a5a5a5;
+    font-family: Inter;
+    cursor: pointer;
+    font-size: 14px;
+    color: #FFF;
+    border-radius: 5px;
+    float: right;
+    transition: all 350ms;
+    margin-right: 20px; 
+}
+
+.btn:hover {
+    background-color: #3a3a3a;
+}
+
+.logo {
+    display: flex;
+    user-select: none;
+}
+
 .navbar img {
     width: 30px;
     height: 30px;
     margin-right: 10px;
+    align-self: center;
 }
 
 .navbar span {
     flex-grow: 1;
 }
 
-.navbar button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-}
+
 
 .container {
     display: flex;
@@ -84,18 +98,30 @@ body {
 }
 
 .sidebar ul li a {
+    display: block;
+    width: calc(100% - 1px); /* Adjust width to accommodate border */
     color: #ADADAD;
-    width: 100%;
     cursor: pointer;
     text-decoration: none;
     font-family: "Segoe";
-    padding-left: 10px;
+    padding: 3px 10px; /* Adjust padding as needed */
     font-size: 13px;
+    box-sizing: border-box; /* Include border in width calculation */
+    transition: all 250ms;
 }
 
-.sidebar ul li:hover {
+.sidebar ul li a:hover {
     background-color: #2e2e2e;
 }
+
+.sidebar ul li a:focus {
+    border: 1px solid yellow;
+    background-color: #2e2e2e;
+}
+
+
+
+
 
 .editor-container {
     width: 100%;
@@ -216,17 +242,24 @@ button {
     display: flex;
     flex-direction: column;
     background-color: #131313;
-    border: 1px solid #a5a5a5;
+    border-left: 1px solid #a5a5a5;
     color: #FFF;
-    margin-left: 20px; 
 }
+
+#live-preview h3 {
+    margin: 0;
+    padding: 4px;
+}
+
+
 
 iframe {
     border: none;
     width: 100%;
-    background-color: #ffffff;
     border-top: 1px solid #a5a5a5;
     box-sizing: border-box;
+    color: #ffffff;
+    background-color: white;
     flex-grow: 1; 
 }
 

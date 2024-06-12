@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperStar - Code Editor</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-
+    <!-- Load Monaco Editor's required scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.29.0/min/vs/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 </head>
 <body>
 
 <div class="navbar">
-   <img src="imgs/logo.png">
-   <h3>SuperStar</h3>
+    <div class="logo">
+        <img src="imgs/logo.png">
+        <h3>SuperStar</h3>
+    </div>
+    <div class="navbar-right">
+        <button class="btn" onclick="exportProject()">Export Project</button>
+    </div>
 </div>
 
 <div class="container">
@@ -40,7 +45,7 @@
             </div>
             <div id="css-code" style="height: calc(100% - 40px); width: 100%;"></div>
         </div>
-        <div class="editor-section" id="js-section">
+        <div class="editor-section" id="js-section" style="display: none;">
             <div class="tab">
                 <h3 class="file">scripts.js</h3>
             </div>
@@ -48,32 +53,196 @@
         </div>
     </div>
 
-    
-
     <div id="live-preview">
         <h3>Live Preview</h3>
-        <iframe id="output" style="width: 100%; height: calc(100% - 40px);"></iframe>
+        <iframe id="output" style="width: 100%; height: calc(100% - 40px); overflow: hidden;"></iframe>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Initialize Ace editor for HTML
-        var htmlEditor = ace.edit("html-code");
-        htmlEditor.setTheme("ace/theme/twilight");
-        htmlEditor.session.setMode("ace/mode/html");
+    var htmlEditor, cssEditor, jsEditor;
 
-        // Initialize Ace editor for CSS
-        var cssEditor = ace.edit("css-code");
-        cssEditor.setTheme("ace/theme/twilight");
-        cssEditor.session.setMode("ace/mode/css");
+    // Load Monaco Editor
+    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.23.0/min/vs' }});
+    require(['vs/editor/editor.main'], function () {
+        // Initialize Monaco editor for HTML
+        htmlEditor = monaco.editor.create(document.getElementById('html-code'), {
+            language: 'html',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            wordBasedSuggestions: false,
+            suggest: {
+                snippetsPreventQuickSuggestions: false,
+                snippets: true,
+                autoClosingBrackets: 'always',
+                autoClosingQuotes: 'always',
+            }
+        });
 
-        // Initialize Ace editor for JavaScript
-        var jsEditor = ace.edit("js-code");
-        jsEditor.setTheme("ace/theme/twilight");
-        jsEditor.session.setMode("ace/mode/javascript");
+        // Initialize Monaco editor for CSS
+        cssEditor = monaco.editor.create(document.getElementById('css-code'), {
+            language: 'css',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            wordBasedSuggestions: false,
+            suggest: {
+                snippetsPreventQuickSuggestions: false,
+                snippets: true,
+                autoClosingBrackets: 'always',
+                autoClosingQuotes: 'always',
+            }
+        });
+
+        // Initialize Monaco editor for JavaScript
+        jsEditor = monaco.editor.create(document.getElementById('js-code'), {
+            language: 'javascript',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            wordBasedSuggestions: false,
+            suggest: {
+                snippetsPreventQuickSuggestions: false,
+                snippets: true,
+                autoClosingBrackets: 'always',
+                autoClosingQuotes: 'always',
+            }
+        });
+
+        // Function to update live preview
+        function updateLivePreview() {
+            const htmlCode = htmlEditor.getValue();
+            const cssCode = cssEditor.getValue();
+            const jsCode = jsEditor.getValue();
+
+            const output = document.getElementById('output').contentWindow.document;
+            output.open();
+            output.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <style>${cssCode}</style>
+                </head>
+                <body>
+                    ${htmlCode}
+                    <script>${jsCode}<\/script>
+                </body>
+                </html>
+            `);
+            output.close();
+        }
+
+        // Update live preview when editors change
+        htmlEditor.onDidChangeModelContent(updateLivePreview);
+        cssEditor.onDidChangeModelContent(updateLivePreview);
+        jsEditor.onDidChangeModelContent(updateLivePreview);
+
+        // Save code to localStorage when editors change
+        htmlEditor.onDidChangeModelContent(saveCodeToLocalStorage);
+        cssEditor.onDidChangeModelContent(saveCodeToLocalStorage);
+        jsEditor.onDidChangeModelContent(saveCodeToLocalStorage);
+
+        // Load code from localStorage on page load
+        loadCodeFromLocalStorage();
+
+        // Function to save code to localStorage
+        function saveCodeToLocalStorage() {
+            localStorage.setItem('htmlCode', htmlEditor.getValue());
+            localStorage.setItem('cssCode', cssEditor.getValue());
+            localStorage.setItem('jsCode', jsEditor.getValue());
+        }
+
+        // Function to load code from localStorage
+        function loadCodeFromLocalStorage() {
+            var savedHtmlCode = localStorage.getItem('htmlCode');
+            var savedCssCode = localStorage.getItem('cssCode');
+            var savedJsCode = localStorage.getItem('jsCode');
+
+            if (savedHtmlCode !== null) {
+                htmlEditor.setValue(savedHtmlCode);
+            }
+            if (savedCssCode !== null) {
+                cssEditor.setValue(savedCssCode);
+            }
+            if (savedJsCode !== null) {
+                jsEditor.setValue(savedJsCode);
+            }
+        }
     });
+    
+
+    function exportProject() {
+        var htmlContent = encodeURIComponent(localStorage.getItem('htmlCode') || '');
+        var cssContent = encodeURIComponent(localStorage.getItem('cssCode') || '');
+        var jsContent = encodeURIComponent(localStorage.getItem('jsCode') || '');
+
+        // Create download links for each file
+        createDownloadLink('index.html', htmlContent, 'html');
+        createDownloadLink('styles.css', cssContent, 'css');
+        createDownloadLink('scripts.js', jsContent, 'js');
+
+        // Create a zip file
+        var zip = new JSZip();
+        zip.file("index.html", htmlContent);
+        zip.file("styles.css", cssContent);
+        zip.file("scripts.js", jsContent);
+
+        // Generate the zip file asynchronously
+        zip.generateAsync({ type: "blob" })
+            .then(function (content) {
+                // Create a download link for the zip file
+                var element = document.createElement('a');
+                element.setAttribute('href', URL.createObjectURL(content));
+                element.setAttribute('download', 'project.zip');
+                element.style.display = 'none';
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            });
+    }
+
+    function createDownloadLink(filename, content, type) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + content);
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    function openFile(type) {
+        document.getElementById('html-section').style.display = 'none';
+        document.getElementById('css-section').style.display = 'none';
+        document.getElementById('js-section').style.display = 'none';
+
+        if (type === 'html') {
+            document.getElementById('html-section').style.display = 'block';
+        } else if (type === 'css') {
+            document.getElementById('css-section').style.display = 'block';
+        } else if (type === 'js') {
+            document.getElementById('js-section').style.display = 'block';
+        }
+    }
+
+
+    function openFile(type) {
+        document.getElementById('html-section').style.display = 'none';
+        document.getElementById('css-section').style.display = 'none';
+        document.getElementById('js-section').style.display = 'none';
+
+        if (type === 'html') {
+            document.getElementById('html-section').style.display = 'block';
+        } else if (type === 'css') {
+            document.getElementById('css-section').style.display = 'block';
+        } else if (type === 'js') {
+            document.getElementById('js-section').style.display = 'block';
+        }
+    }
+
+    // Open index.html by default
+    openFile('html');
 </script>
-<script src="js/scripts.js"></script>
+
 </body>
 </html>
